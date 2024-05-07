@@ -1,7 +1,6 @@
 import { FiAlignLeft } from "react-icons/fi";
 import { IoHome } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
-import userIcon from "../../../assets/icons/user.png";
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 
@@ -37,6 +36,17 @@ const Navbar = () => {
       >
         Your link
       </NavLink>
+      <div className="space-y-3 lg:hidden">
+        <Link to="/logIn" className="btn rounded-md w-full btn-sm btn-warning">
+          Login
+        </Link>
+        <Link
+          to="/register"
+          className="btn rounded-md w-full btn-sm btn-warning"
+        >
+          Register
+        </Link>
+      </div>
     </>
   );
 
@@ -83,48 +93,65 @@ const Navbar = () => {
                 Register
               </Link>
             </div>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="rounded-full hover:border transition-all">
-                  {user ? <img src={user.photoURL} /> : <img src={userIcon} />}
+            {user && (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="rounded-full">
+                    <img src={user?.photoURL} />
+                  </div>
+                </div>
+
+                <div>
+                  <div
+                    tabIndex={0}
+                    className="relative inline-block dropdown-content"
+                  >
+                    <div className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+                      <a className="flex items-center p-3 -mt-2 text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <img
+                          className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
+                          src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8d29tYW4lMjBibHVlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=face&w=500&q=200"
+                        />
+                        <div className="mx-1">
+                          <h1 className="font-semibold text-gray-700 dark:text-gray-200">
+                            Jane Doe
+                          </h1>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            janedoe@exampl.com
+                          </p>
+                        </div>
+                      </a>
+
+                      <hr className="border-gray-200 dark:border-gray-700 " />
+
+                      <a className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {/* profile icon */}
+
+                        <span className="mx-1">view profile</span>
+                      </a>
+
+                      <a className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {/* setting icon */}
+                        <span className="mx-1">Settings</span>
+                      </a>
+
+                      <a className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {/* help icon */}
+                        <span className="mx-1">Help</span>
+                      </a>
+                      <a className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {/* icon */}
+                        <span className="mx-1">Sign Out</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <ul
-                tabIndex={0}
-                className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-md w-52"
-              >
-                <div className="">
-                  {user && (
-                    <div>
-                      <img src={user.photoURL} />
-                      <h2 className="text-2xl font-semibold">
-                        {user.displayName}
-                      </h2>
-                      <Link to="">View Profile</Link>
-                    </div>
-                  )}
-                </div>
-                {user ? (
-                  <>
-                    <li>
-                      <Link className="btn btn-ghost btn-sm">Profile</Link>
-                    </li>
-                    <li>
-                      <Link className="btn btn-ghost btn-sm">Logout</Link>
-                    </li>
-                  </>
-                ) : (
-                  <div className="flex flex-col lg:hidden">
-                    <Link className="btn btn-ghost btn-sm">Login</Link>
-                    <Link className="btn btn-ghost btn-sm">Register</Link>
-                  </div>
-                )}
-              </ul>
-            </div>
+            )}
           </div>
         </div>
       </div>
