@@ -95,9 +95,19 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-md w-52"
               >
-                <div className="">{user && <img src={user.photoURL} />}</div>
+                <div className="">
+                  {user && (
+                    <div>
+                      <img src={user.photoURL} />
+                      <h2 className="text-2xl font-semibold">
+                        {user.displayName}
+                      </h2>
+                      <Link to="">View Profile</Link>
+                    </div>
+                  )}
+                </div>
                 {user ? (
                   <>
                     <li>
