@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import MyPostedJobRow from "./MyPostedJobRow";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyPostedJob = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [MyPostedJobs, setMyPostedJobs] = useState([]);
 
   useEffect(() => {
@@ -12,13 +13,9 @@ const MyPostedJob = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/jobs-email?email=${user.email}`
-    );
+    const { data } = await axiosSecure(`/jobs-email?email=${user.email}`);
     setMyPostedJobs(data);
   };
-
-  // console.log(MyPostedJobs);
 
   return (
     <section className="container px-4 mx-auto pt-12">

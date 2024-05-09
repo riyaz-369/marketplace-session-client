@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const BidRequesRow = ({ BidReq, getData }) => {
+const BidRequesRow = ({ BidReq }) => {
   const { _id, category, email, job_title, deadline, price, status } =
     BidReq || {};
   // console.log(BidReq);
@@ -14,7 +14,6 @@ const BidRequesRow = ({ BidReq, getData }) => {
         { status }
       );
       console.log(data);
-      getData();
     } catch (err) {
       console.log(err.message);
     }

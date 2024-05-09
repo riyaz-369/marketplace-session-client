@@ -1,13 +1,13 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const MyPostedJobRow = ({ job, getData }) => {
+  const axiosCommon = useAxiosCommon();
+
   const handleDelete = async (id) => {
     try {
-      const { data } = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/jobs/${id}`
-      );
+      const { data } = await axiosCommon.delete(`/jobs/${id}`);
       if (data.deletedCount > 0) {
         toast.success("Deleted successfully");
         getData();

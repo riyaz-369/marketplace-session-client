@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import axios from "axios";
 
 const LogIn = () => {
   const { logInWithGoogle, signIn, user, loading } = useAuth();
@@ -19,7 +20,16 @@ const LogIn = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await logInWithGoogle();
+      const result = await logInWithGoogle();
+      // TOKEN
+      // const { data } = await axios.post(
+      //   `${import.meta.env.VITE_API_URL}/jwt`,
+      //   {
+      //     email: result.user.email,
+      //   },
+      //   { withCredentials: true }
+      // );
+      console.log(result);
       toast.success("Login successful");
       navigate(doNavigate, { replace: true });
     } catch (error) {
@@ -33,10 +43,19 @@ const LogIn = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ email, password });
+    // console.log({ email, password });
 
     try {
-      await signIn(email, password);
+      const result = await signIn(email, password);
+      // TOKEN
+      // const { data } = await axios.post(
+      //   `${import.meta.env.VITE_API_URL}/jwt`,
+      //   {
+      //     email: result.user.email,
+      //   },
+      //   { withCredentials: true }
+      // );
+      console.log(result);
       toast.success("Login success");
       navigate(doNavigate, { replace: true });
     } catch (err) {

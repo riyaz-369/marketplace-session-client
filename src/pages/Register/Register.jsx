@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import logImg from "../../assets/image-animation/login.json";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Register = () => {
   const { createUser, updatedProfile, setUser, user } = useAuth();
@@ -20,9 +21,17 @@ const Register = () => {
     const password = form.password.value;
 
     try {
-      await createUser(email, password);
+      const result = await createUser(email, password);
       await updatedProfile(name, photoURL);
-      setUser({ ...user, photoURL: photoURL, displayName: name });
+      // Optimistic UI update
+      setUser({ ...result?.user, photoURL: photoURL, displayName: name });
+      // TOKEN
+      // const { data } = await axios.post(
+      //   `${import.meta.env.VITE_API_URL}/jwt`,
+      //   { email: result.user.email },
+      //   { withCredentials: true }
+      // );
+      // console.log(data);
       navigate(doNavigate, { replace: true });
       toast.success("Registration success");
     } catch (err) {

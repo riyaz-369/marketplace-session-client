@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -50,8 +51,33 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUserEmail = { email: userEmail };
+
       setUser(currentUser);
       setLoading(false);
+      // if the user have exist then issue a token
+      if (currentUser) {
+        const getToken = async () => {
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/jwt`,
+            loggedUserEmail,
+            { withCredentials: true }
+          );
+          console.log(data);
+        };
+        getToken();
+      } else {
+        const deleteToken = async () => {
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/logout`,
+            loggedUserEmail,
+            { withCredentials: true }
+          );
+          console.log(data);
+        };
+        deleteToken();
+      }
     });
     return () => {
       return unSubscribe();
